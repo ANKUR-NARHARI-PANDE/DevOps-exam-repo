@@ -40,7 +40,7 @@ resource "aws_route_table_association" "private_route_association" {
 resource "aws_security_group" "example" {
   name        = "my_lambda_security_group"
   description = "Security group for my Lambda function"
-  vpc_id      = aws_vpc.main.id  # Make sure to use the correct VPC ID
+  vpc_id      = data.aws_vpc.vpc.id  # Make sure to use the correct VPC ID
 
   ingress {
     from_port   = 80               # Allow incoming traffic on port 80
