@@ -28,7 +28,7 @@ pipeline{
        stage('Invoke Lambda') {
     steps {
         script {
-            def result = sh(script: 'aws lambda invoke --function-name lambda_function_1 --log-type Tail output.txt', returnStdout: true)
+            def result = sh(script: 'aws lambda invoke --function-name lambda_function_2 --log-type Tail output.txt', returnStdout: true)
             echo "Lambda output: ${result}"
         }
     }
