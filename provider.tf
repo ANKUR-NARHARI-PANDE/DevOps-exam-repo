@@ -7,7 +7,7 @@ provider "aws" {
 terraform {
   
   backend "s3" {
-    bucket = "467.devops.candidate.exa"
+    bucket = "467.devops.candidate.exam"
     key    = "ANKUR.PANDE"
     region = "ap-south-1"
   }
