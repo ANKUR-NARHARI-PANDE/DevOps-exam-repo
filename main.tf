@@ -37,7 +37,7 @@ resource "aws_route_table_association" "private_route_association" {
   route_table_id = aws_route_table.private_route_table.id
 }
 
-resource "aws_security_group" "example" {
+/*resource "aws_security_group" "example" {
   name        = "my_lambda_security_group"
   description = "Security group for my Lambda function"
   vpc_id      = data.aws_vpc.vpc.id  # Make sure to use the correct VPC ID
@@ -55,7 +55,7 @@ resource "aws_security_group" "example" {
     protocol    = "-1"             # Allow all outbound traffic
     cidr_blocks = ["0.0.0.0/0"]    # Allow traffic to all IPs
   }
-}
+}*/
 
 
 resource "aws_lambda_function" "example" {
@@ -65,8 +65,8 @@ resource "aws_lambda_function" "example" {
   role          = data.aws_iam_role.lambda.arn
   filename = "lambda_function.zip"
 
-  vpc_config {
+  /*vpc_config {
     subnet_ids          = [aws_subnet.private.id]
     security_group_ids  = [aws_security_group.example.id]
-  }
+  }*/
 }
