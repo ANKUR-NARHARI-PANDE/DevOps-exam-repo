@@ -2,17 +2,6 @@
 
 
 
-
-
-
-
-resource "aws_vpc" "main" {
-  cidr_block = "10.0.0.0/16"
-   tags = {
-      Name = "vpc"
-    }
-}
-
 resource "aws_subnet" "private" {
   vpc_id     = data.aws_vpc.vpc.id
   cidr_block = "10.0.4.0/24"
