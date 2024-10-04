@@ -37,7 +37,7 @@ resource "aws_route_table_association" "private_route_association" {
   route_table_id = aws_route_table.private_route_table.id
 }
 
-resource "aws_security_group" "example" {
+resource "aws_default_security_group" "example" {
   name        = "my_lambda_security_group"
   description = "Security group for my Lambda function"
   vpc_id      = data.aws_vpc.vpc.id  # Make sure to use the correct VPC ID
@@ -68,6 +68,6 @@ resource "aws_lambda_function" "example" {
 
   vpc_config {
     subnet_ids          = [aws_subnet.private.id]
-    security_group_ids  = [aws_security_group.example.id]
+    security_group_ids  = [aws_default_security_group.example.id]
   }
 }
