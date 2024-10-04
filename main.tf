@@ -40,8 +40,8 @@ resource "aws_route_table_association" "private_route_association" {
 
 
 
-resource "aws_lambda_function" "example_1" {
-  function_name = "my_lambda_function_1"
+resource "aws_lambda_function" "example_2" {
+  function_name = "my_lambda_function_2"
   handler       = "lambda_function.lambda_handler"
   runtime       = "python3.8"
   role          = data.aws_iam_role.lambda.arn
