@@ -38,24 +38,6 @@ resource "aws_route_table_association" "private_route_association" {
 }
 
 
-# resource "aws_default_security_group" "example" {
-#   vpc_id      = data.aws_vpc.vpc.id  # Make sure to use the correct VPC ID
-
-#   ingress {
-#     from_port   = 0               # Allow incoming traffic on port 80
-#     to_port     = 0
-#     self = true
-#     protocol    = -1
-#     cidr_blocks = ["0.0.0.0/0"]    # Allow traffic from all IPs (adjust as needed)
-#   }
-
-#   egress {
-#     from_port   = 0
-#     to_port     = 0
-#     protocol    = "-1"             # Allow all outbound traffic
-#     cidr_blocks = ["0.0.0.0/0"]    # Allow traffic to all IPs
-#   }
-# }
 
 
 resource "aws_lambda_function" "example" {
@@ -70,10 +52,7 @@ resource "aws_lambda_function" "example" {
         SUBNET_ID = aws_subnet.private.id
     }
 }
-#   vpc_config {
-#     subnet_ids          = [aws_subnet.private.id]
-#     security_group_ids  = [aws_default_security_group.example.id]
-#   }
+
 }
 
 
