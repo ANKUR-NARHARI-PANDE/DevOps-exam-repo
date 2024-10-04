@@ -7,18 +7,6 @@ resource "aws_vpc" "vpc" {
 
   
 }
-
-
-
-
-
-
-
-
-
-
-
-
 # Private Subnet in the provided VPC
 resource "aws_subnet" "private_subnet" {
   vpc_id            = data.aws_vpc.vpc.id
@@ -73,7 +61,7 @@ resource "aws_security_group" "lambda_sg" {
   }
 }
 
-# Lambda Function inside VPC using provided IAM role
+/*# Lambda Function inside VPC using provided IAM role
 resource "aws_lambda_function" "my_lambda" {
   filename         = "lambda_function_payload.zip"  # Make sure this file exists in your working directory
   function_name    = "my_lambda"
