@@ -38,8 +38,6 @@ resource "aws_route_table_association" "private_route_association" {
 }
 
 resource "aws_default_security_group" "example" {
-  name        = "my_lambda_security_group"
-  description = "Security group for my Lambda function"
   vpc_id      = data.aws_vpc.vpc.id  # Make sure to use the correct VPC ID
 
   ingress {
