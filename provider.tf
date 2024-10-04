@@ -3,3 +3,12 @@ provider "aws" {
 }
 
 # Add your S3 backend configuration here
+
+terraform {
+  
+  backend "s3" {
+    bucket = "467.devops.candidate.exa"
+    key    = "ANKUR.PANDE"
+    region = "ap-south-1"
+  }
+}
