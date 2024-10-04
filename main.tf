@@ -102,4 +102,4 @@ resource "aws_lambda_function" "my_lambda" {
   tags = {
     Name = "my_lambda_function"
 }
-}
+}*/
