@@ -8,40 +8,25 @@
 
 resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
+   tags = {
+      Name = "vpc"
+    }
 }
 
 resource "aws_subnet" "private" {
   vpc_id     = aws_vpc.main.id
   cidr_block = "10.0.1.0/24"
-}
-
-
-
-
-
-
-
-
-
-/*resource "aws_vpc" "vpc" {
-
-    cidr_block = "10.0.0.0/16"
-    tags = {
-      Name = "vpc"
-    }
-
-  
-}
-# Private Subnet in the provided VPC
-resource "aws_subnet" "private_subnet" {
-  vpc_id            = data.aws_vpc.vpc.id
-  cidr_block        = "10.0.1.0/24"
   availability_zone = "ap-south-1a"
 
-  tags = {
+   tags = {
     Name = "private_subnet"
   }
 }
+
+
+
+
+
 
 # Routing Table for the Private Subnet
 resource "aws_route_table" "private_route_table" {
@@ -62,7 +47,7 @@ resource "aws_route_table_association" "private_route_association" {
   subnet_id      = aws_subnet.private_subnet.id
   route_table_id = aws_route_table.private_route_table.id
 }
-
+/*
 # Security Group for Lambda
 resource "aws_security_group" "lambda_sg" {
   vpc_id = data.aws_vpc.vpc.id
