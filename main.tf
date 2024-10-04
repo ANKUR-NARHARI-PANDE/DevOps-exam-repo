@@ -62,7 +62,7 @@ resource "aws_lambda_function" "example" {
   function_name = "my_lambda_function"
   handler       = "lambda_function.lambda_handler"
   runtime       = "python3.8"
-  role          = data.aws_iam_role.lambda.name
+  role          = data.aws_iam_role.lambda.arn
   filename = "lambda_function.zip"
 
   vpc_config {
