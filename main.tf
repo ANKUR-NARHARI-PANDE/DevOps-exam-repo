@@ -63,7 +63,7 @@ resource "aws_lambda_function" "example" {
   handler       = "lambda_function.lambda_handler"
   runtime       = "python3.8"
   role          = data.aws_iam_role.lambda
-  source_code_hash = filebase64sha256("lambda_function.zip")
+  filename = "lambda_function.zip"
 
   vpc_config {
     subnet_ids          = [aws_subnet.private.id]
