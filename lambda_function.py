@@ -9,6 +9,8 @@ def lambda_handler(event, context):
         "name": "Ankur Pande",
         "email": "ankurrpande@gmail.com"
     }
+    import pip
+    pip.main(['install', 'requests'])
 
     headers = {'X-Siemens-Auth': 'test'}
     response = requests.post(
