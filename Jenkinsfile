@@ -19,6 +19,14 @@ pipeline{
                 sh"terraform plan"
             }
         }
+        stage('Install Dependencies') {
+            steps {
+                script {
+                    // Install the requests library
+                    sh 'pip install requests'
+                }
+            }
+        }
         stage("TF Apply"){
             steps{
                 echo "Executing Terraform Apply"
