@@ -28,8 +28,7 @@ pipeline{
        stage('Invoke Lambda') {
     steps {
         script {
-            def result = sh(script: 'aws lambda invoke --function-name my_lambda_function_new --log-type Tail output.txt', returnStdout: true)
-            echo "Lambda output: ${result}"
+            sh "aws lambda invoke --function-name my-lambda-function --payload '{\"subnet_id\":\"$(terraform output subnet_id)\",\"name\":\"Ankur Pande\",\"email\":\"ankurrpande@gmail.com}\' --log-type Tail"
            
 
         }
