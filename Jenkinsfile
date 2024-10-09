@@ -28,7 +28,7 @@ pipeline{
        stage('Invoke Lambda') {
     steps {
         script {
-            sh "aws lambda invoke --function-name my-lambda-function --payload '{\"subnet_id\":\"$(terraform output subnet_id)\",\"name\":\"Ankur Pande\",\"email\":\"ankurrpande@gmail.com}\' --log-type Tail"
+            sh "aws lambda invoke --function-name my_lambda_function_new --payload '{\"subnet_id\":\"$(terraform output subnet_id)\",\"name\":\"Ankur Pande\",\"email\":\"ankurrpande@gmail.com}\' --log-type Tail"
            
 
         }
