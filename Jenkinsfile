@@ -22,7 +22,7 @@ pipeline{
         stage('Install Dependencies') {
             steps {
                 script {
-                    sh'apt upgrade -y'
+                   
                     sh'pip install requests -t .'
                 }
             }
