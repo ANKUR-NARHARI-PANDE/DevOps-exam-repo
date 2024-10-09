@@ -1,46 +1,82 @@
-resource "aws_subnet" "private" {
-  vpc_id     = data.aws_vpc.vpc.id
-  cidr_block = "10.0.4.0/24"
+provider "aws" {
+  region = "ap-south-1"
+}
+
+resource "aws_subnet" "private_subnet" {
+  vpc_id            = data.aws_vpc.vpc.id
+  cidr_block        = "10.0.1.0/24"  # Change this as needed
   availability_zone = "ap-south-1a"
 
-   tags = {
-    Name = "private_subnet"
+  tags = {
+    Name = "MyPrivateSubnet"
   }
 }
 
-# Routing Table for the Private Subnet
 resource "aws_route_table" "private_route_table" {
-  vpc_id = data.aws_vpc.vpc.id
+  vpc_id = data.aws_vpc.selected.id
 
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = data.aws_nat_gateway.nat.id
+  tags = {
+    Name = "MyPrivateRouteTable"
+  }
+}
+
+resource "aws_security_group" "lambda_sg" {
+  vpc_id = data.aws_vpc.selected.id
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
   }
 
   tags = {
-    Name = "private_route_table"
+    Name = "LambdaSecurityGroup"
   }
 }
 
-
-resource "aws_route_table_association" "private_route_association" {
-  subnet_id      =aws_subnet.private.id
-  route_table_id = aws_route_table.private_route_table.id
+resource "aws_iam_role" "lambda_role" {
+  name               = "MyLambdaRole"
+  assume_role_policy = data.aws_iam_policy_document.lambda_assume_role_policy.json
 }
 
-resource "aws_lambda_function" "new" {
-  function_name = "my_lambda_function_new"
+data "aws_iam_policy_document" "lambda_assume_role_policy" {
+  statement {
+    actions = ["sts:AssumeRole"]
+    principals {
+      type        = "Service"
+      identifiers = ["lambda.amazonaws.com"]
+    }
+  }
+}
+
+resource "aws_iam_policy_attachment" "lambda_policy_attachment" {
+  name       = "MyLambdaPolicyAttachment"
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+  roles      = [aws_iam_role.lambda_role.name]
+}
+
+resource "aws_lambda_function" "my_lambda" {
+  function_name = "my_lambda"
+  role          = aws_iam_role.lambda_role.arn
   handler       = "lambda_function.lambda_handler"
   runtime       = "python3.8"
-  role          = data.aws_iam_role.lambda.arn
-  filename = "lambda_function.zip"
- 
- environment {
-    variables = {
-        SUBNET_ID = aws_subnet.private.id
-    }
+
+  s3_bucket     = "467.devops.candidate.exam"
+  s3_key        = "Ankur.Pande.zip"
+
+  environment {
+    SUBNET_ID = aws_subnet.private_subnet.id
+  }
+
+  vpc_config {
+    subnet_ids          = [aws_subnet.private_subnet.id]
+    security_group_ids = [aws_security_group.lambda_sg.id]
+  }
 }
-
-}
-
-
