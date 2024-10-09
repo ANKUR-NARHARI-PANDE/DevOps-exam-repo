@@ -45,7 +45,7 @@ resource "aws_security_group" "lambda_sg" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-}
+
  
  environment {
     variables = {
