@@ -30,7 +30,7 @@ pipeline{
         script {
             def result = sh(script: 'aws lambda invoke --function-name my_lambda_function_new --log-type Tail output.txt', returnStdout: true)
             echo "Lambda output: ${result}"
-            cat output.json | base64 --decode
+           
 
         }
     }
