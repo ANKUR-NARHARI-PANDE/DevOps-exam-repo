@@ -36,15 +36,7 @@ resource "aws_lambda_function" "new" {
   filename = "lambda_function.zip"
 
 
-resource "aws_security_group" "lambda_sg" {
-  vpc_id =data.aws_vpc.vpc.id
 
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
 
  
  environment {
