@@ -25,8 +25,31 @@ resource "aws_route_table" "private_route_table" {
 
 resource "aws_route_table_association" "private_route_association" {
   subnet_id      =aws_subnet.private.id
+
   route_table_id = aws_route_table.private_route_table.id
 }
+resource "aws_security_group" "lambda_sg" {
+  vpc_id = data.aws_vpc.vpc.id
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+  }
+
+  tags = {
+    Name = "LambdaSecurityGroup"
+  }
+}
+
+
 
 resource "aws_lambda_function" "new" {
   function_name = "my_lambda_function_new"
@@ -40,6 +63,11 @@ resource "aws_lambda_function" "new" {
         SUBNET_ID = aws_subnet.private.id
     }
 }
+
+  vpc_config {
+    subnet_ids          = [aws_subnet.private.id]
+    security_group_ids = [aws_security_group.lambda_sg.id]
+  }
 
 }
 
