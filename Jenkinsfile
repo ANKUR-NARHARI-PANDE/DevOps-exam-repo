@@ -23,7 +23,7 @@ pipeline{
             steps {
                 script {
                     // Install the requests library
-                    sh 'pip install requests'
+                    sh'pip install requests -t .'
                 }
             }
         }
