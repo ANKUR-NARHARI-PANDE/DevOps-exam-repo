@@ -23,7 +23,8 @@ pipeline{
             steps {
                 script {
                    
-                    sh'pip install requests -t .'
+                   sh 'pip install requests --upgrade -t .'
+
                 }
             }
         }
